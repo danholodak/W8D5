@@ -32,53 +32,52 @@ Function.prototype.myBind2 = function(context, ...bindArgs) {
     }
 }
 
-
-  function curriedSum(numArgs){
-    let numbers = [];
-    return function _curriedSum(num){
-      numbers.push(num);
-      if (numbers.length === numArgs){
-        return numbers.reduce((a, b) => {
-          return a+b
-        })
-      }else{
-        return _curriedSum
-      }
+function curriedSum(numArgs){
+  let numbers = [];
+  return function _curriedSum(num){
+    numbers.push(num);
+    if (numbers.length === numArgs){
+      return numbers.reduce((a, b) => {
+        return a+b
+      })
+    }else{
+      return _curriedSum
     }
   }
+}
 
-  // Function.prototype.curry = function(numArgs){
-  //   let args = []
-  //   let func = this
-  //   return function _curry(arg){
-  //     args.push(arg);
-  //     if (args.length === numArgs){
-  //       return func.apply(this, args)
-  //     }else{
-  //       return _curry
-  //     }
-  //   }
-  // }
-  Function.prototype.curry = function(numArgs){
-    let args = []
-    let func = this
-    return function _curry(arg){
-      args.push(arg);
-      if (args.length === numArgs){
-        return func(...args)
-      }else{
-        return _curry
-      }
+// Function.prototype.curry = function(numArgs) {
+//   let args = [];
+//   let func = this;
+//   return function _curry(arg) {
+//     args.push(arg);
+//     if (args.length === numArgs) {
+//       return _curry;
+//     } else {
+//       return func.apply(this, args);
+//     }
+//   }
+// }
+
+Function.prototype.curry = function(numArgs) {
+  let args = [];
+  let func = this;
+  return function _curry(arg) {
+    args.push(arg);
+    if (args.length < numArgs) {
+      return _curry;
+    } else {
+      return func(...args);
     }
   }
-  
-  function sum(a, b, c){
-    console.log(a+b+c);
-  }
+}
 
-   let a = sum.curry(3)
+function sum(a, b, c){
+  console.log(a+b+c);
+}
 
-   a(1)
-   a(2)
-   a(3)
+let a = sum.curry(3)
 
+a(1)
+a(2)
+a(3)
