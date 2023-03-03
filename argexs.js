@@ -47,15 +47,38 @@ Function.prototype.myBind2 = function(context, ...bindArgs) {
     }
   }
 
+  // Function.prototype.curry = function(numArgs){
+  //   let args = []
+  //   let func = this
+  //   return function _curry(arg){
+  //     args.push(arg);
+  //     if (args.length === numArgs){
+  //       return func.apply(this, args)
+  //     }else{
+  //       return _curry
+  //     }
+  //   }
+  // }
   Function.prototype.curry = function(numArgs){
     let args = []
     let func = this
     return function _curry(arg){
       args.push(arg);
       if (args.length === numArgs){
-        return func.apply(, args)
+        return func(...args)
       }else{
         return _curry
       }
     }
   }
+  
+  function sum(a, b, c){
+    console.log(a+b+c);
+  }
+
+   let a = sum.curry(3)
+
+   a(1)
+   a(2)
+   a(3)
+
